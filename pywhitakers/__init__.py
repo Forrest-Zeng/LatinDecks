@@ -66,7 +66,7 @@ class Translator():
             # print(lines[i].split(' '))
             if "[" in lines[i]:
                 definition = lines[i+1].rstrip()
-                term = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]}).json()["macronized_text"].replace(',','')
+                term = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers).json()["macronized_text"].replace(',','')
                 return definition, term
         
             

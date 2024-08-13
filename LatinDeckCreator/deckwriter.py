@@ -17,13 +17,13 @@ class DeckWriter():
         failed = []
 
         for line in lines:
-            # try:
-            definition = self.TranslatorObject.get_term_and_definition(line.rstrip(),delay)
-            result[definition[1]]=definition[0]
-            # except:
-            #     print(line.rstrip())
-            #     print("The above word didn't translate right, skipping.")
-            #     failed.append(line.rstrip())
+            try:
+                definition = self.TranslatorObject.get_term_and_definition(line.rstrip(),delay)
+                result[definition[1]]=definition[0]
+            except:
+                print(line.rstrip())
+                print("The above word didn't translate right, skipping.")
+                failed.append(line.rstrip())
         print(failed)
         return result,failed
 
