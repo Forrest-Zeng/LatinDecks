@@ -10,12 +10,9 @@
 
 <p><textarea cols="40" rows="20" id="term_form_value"></textarea></p>
 
-
-         
+<p id="term_count">Number of terms:</p>         
 
 <p><input type = "submit" value = "submit" id="term_form_submit"/></p>
-
-
 
 
       File Download (May take more than 5 minutes): <div id="place_for_file" ></div>
@@ -39,6 +36,10 @@
                }
              });
          });
+        $("#term_form_value").keyup(function(){
+          var rowCount = $("#term_form_value").val().split(/\r|\r\n|\n/).length;
+          document.getElementById("term_count").textContent = "Number of terms: ".concat(rowCount);
+        });
       </script>
 </div>
 <div id="instruction_section">
