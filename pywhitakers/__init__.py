@@ -38,13 +38,14 @@ class Translator():
 
         time.sleep(delay)
 
-        headers = {'content-type':'application/json',
-                  'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
-'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-'Accept-Language':'en-US,en;q=0.5'}
+        headers = {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                   'Connection:':"keep-alive",
+                  'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+'Accept':'*/*',
+'Accept-Language':'en-US,en'}
 
         try:
-            req = session.get(self.endpoint,params={"query":demacronized_word},headers=headers)
+            req = session.get(self.endpoint,params={"query":demacronized_word})
         except req.json()["status"] != "ok":
             print(req.json()["status"])
             raise UserWarning
@@ -55,7 +56,7 @@ class Translator():
             # print(lines[i].split(' '))
             if self.latin_comparison(demacronized_word, lines[i].replace(',','').split(' ')[0]) and not self.latin_comparison(demacronized_word, lines[i+1].replace(',','').split(' ')[0]) and "[" in lines[i]:
                 definition = lines[i+1].rstrip()
-                term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
+                term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]})
                 print(term_request.status_code)
                 term = term_request.json()["macronized_text"].replace(',','')
                 return definition, term
