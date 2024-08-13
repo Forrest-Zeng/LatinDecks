@@ -1,7 +1,8 @@
 <html>
    <body>      
-         
-
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}" type="text/css" media="screen" />
+<div id="deck_section">
+<h1>Automatic Latin Deck Creator</h1>
 <p>Enter terms:</p>
 
 
@@ -39,5 +40,18 @@
              });
          });
       </script>
+</div>
+<div id="instruction_section">
+<h1>Instructions</h1>
+<h2>Deck Creator Instructions</h2>
+<p>Enter your Latin terms, separated by lines. <br>
+  For verbs, enter the first principle part.<br>
+  For nouns, enter the nominative singular.<br>
+  For adjectives, enter the masculine singular.<br>
+  For adverbs, prepositions, and conjunctions, enter the form itself.<br>
+  Then, click submit, and wait for the "Download!" button to show. <br>
+  This may take a few seconds to a few minutes, depending on the number of words. <br>
+</p>
+</div>
    </body>
 </html>

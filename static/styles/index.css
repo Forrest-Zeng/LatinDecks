@@ -1,0 +1,10 @@
+#deck_section {
+    float:left
+    /* margin-left:auto;
+    margin-right:0; */
+}
+#instruction_section {
+    float:right
+    /* margin-left:auto;
+    margin-right:0;; */
+}   
