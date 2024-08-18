@@ -12,7 +12,7 @@ DeckClient = DeckCreator("outputs")
 
 import random
 import os
-
+import collections
 
 @app.route('/')
 @app.route('/index.html')
@@ -31,11 +31,12 @@ def create_deck():
 
     ID = random.randint(1, 100000)
     lines = request.form['terms'].split('\n')
+
     internal_deck = DeckClient.create_deck_internal(lines)
     DeckClient.FileHandlerObject.write_text_lines(internal_deck[0],
                                                   output=f'{ID}.txt')
 
-    return render_template("download.html", ID=ID, failed=internal_deck[1])
+    return render_template("download.html", ID=ID, failed=internal_deck[1], duplicates=[item for item, count in collections.Counter(lines).items() if count > 1])
 
 
 @app.route('/download', methods=['GET'])
