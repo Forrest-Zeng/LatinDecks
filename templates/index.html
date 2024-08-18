@@ -1,8 +1,12 @@
 <html>
+  <head>
+  <title>LatinDecks: Latin Flashcard Deck Creator</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/favicon.ico')}}">
+</head>
    <body>      
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}" type="text/css" media="screen" />
 <div id="deck_section">
-<h1>Automatic Latin Deck Creator</h1>
+<h1>Flashcard Latin Deck Creator</h1>
 <p>Enter terms:</p>
 
 
@@ -45,16 +49,31 @@
 <div id="instruction_section">
 <h1>Instructions</h1>
 <h2>Deck Creator Instructions</h2>
-<p>Enter your Latin terms, separated by lines. <br>
-  For verbs, enter the first principle part.<br>
-  For nouns, enter the nominative singular.<br>
-  For adjectives, enter the masculine singular.<br>
-  For adverbs, prepositions, and conjunctions, enter the form itself.<br>
+<p>Enter your Latin terms in lines. <br>
+  For example:
+  <pre><code>ambulo
+silva
+bonus
+de
+et</code></pre>
+The download will return a .txt file like this:
+<pre><code>walk;:ambulō  ambulāre  ambulavi  ambulatus v ( 1st ) intrans
+good/moral/honest/:bonus  bonī n ( 2nd ) m
+about; away from:dē prep abl
+and, and even; also, even;  (et  et = both  and);:et conj
+wood, forest (sylvan);:silva  silvae n ( 1st ) f
+</code></pre>
+Enter terms like this:<br>
+  <b>Verbs</b>: First Principle Part<br>
+  <b>Nouns</b>: Nominative Singular<br>
+  <b>Adjectives</b>: Masculine Nominative Singular<br>
+  <b>Adverbs, Prepositions, Conjunctions</b>: No special change<br>
   Then, click submit, and wait for the "Download!" button to show. <br>
   This may take a few seconds to a few minutes, depending on the number of words. <br>
 </p>
 <h2>Deck Import Instructions</h2>
-<p>Depending on your flashcard software, change the separator to ":"<br>
+<p>The download will return a .txt file that you can import into your flashcard software.<br>
+  Depending on your flashcard software, change the separator to ":"<br>
   Each term and definition is separated by a line.
 </p>
 </div>
