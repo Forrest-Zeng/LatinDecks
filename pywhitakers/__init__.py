@@ -51,7 +51,10 @@ class Translator():
 
         time.sleep(delay)
 
-        headers = {'User-Agent':random.choice(self.header_choices)}
+        headers = {'User-Agent':random.choice(self.header_choices),
+                   'Accept':'*/*',
+                   'referer':'Https://latin-words.com/'
+                   }
 
         print(headers)
 
