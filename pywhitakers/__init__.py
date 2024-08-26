@@ -61,6 +61,7 @@ class Translator():
         try:
             req = session.get(self.endpoint,params={"query":demacronized_word})
         except req.json()["status"] != "ok":
+            print("req didn't return ok status")
             print(req.json()["status"])
             raise UserWarning
     
