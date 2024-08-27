@@ -52,8 +52,9 @@ class Translator():
         time.sleep(delay)
 
         headers = {'User-Agent':random.choice(self.header_choices),
-                   'Accept':'*/*',
-                   'referer':'Https://latin-words.com/'
+                   'authority':'www.google.com',
+                   'accept':'*/*',
+                   'Connection': 'keep-alive',
                    }
 
         print(headers)
