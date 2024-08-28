@@ -68,7 +68,7 @@ class Translator():
         # print(headers)
 
         try:
-            req = session.get(self.endpoint,headers=headers).json()
+            req = session.get(self.endpoint,headers=headers,params={"query":demacronized_word}).json()
             print(type(req))
             print(req)
                                        
