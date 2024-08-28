@@ -88,7 +88,7 @@ class Translator():
                 try:
                     term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
                     term = term_request.json()["macronized_text"].replace(',','')
-                except term_request["status"] != "ok":
+                except:
                     print("Macronization unavailable")
                     term = lines[i].split("[")[0]
                 
@@ -102,7 +102,7 @@ class Translator():
                 try:
                     term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
                     term = term_request.json()["macronized_text"].replace(',','')
-                except term_request["status"] != "ok":
+                except:
                     print("Macronization unavailable")
                     term = lines[i].split("[")[0]
                 return definition, term
