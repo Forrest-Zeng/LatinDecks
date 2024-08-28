@@ -85,10 +85,14 @@ class Translator():
             # print(lines[i].split(' '))
             if self.latin_comparison(demacronized_word, lines[i].replace(',','').split(' ')[0]) and not self.latin_comparison(demacronized_word, lines[i+1].replace(',','').split(' ')[0]) and "[" in lines[i]:
                 definition = lines[i+1].rstrip()
-                term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
-                print(term_request.status_code)
-                print(term_request)
-                term = term_request.json()["macronized_text"].replace(',','')
+                try:
+                    term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
+                    term = term_request.json()["macronized_text"].replace(',','')
+                except term_request["status"] != "ok":
+                    print(term_request.status_code)
+                    print("Macronization unavailable")
+                    term = lines[i].split("[")[0]
+                
                 return definition, term
             
         for i in range(len(lines)):
@@ -96,7 +100,13 @@ class Translator():
             # print(lines[i].split(' '))
             if "[" in lines[i]:
                 definition = lines[i+1].rstrip()
-                term = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers).json()["macronized_text"].replace(',','')
+                try:
+                    term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
+                    term = term_request.json()["macronized_text"].replace(',','')
+                except term_request["status"] != "ok":
+                    print(term_request.status_code)
+                    print("Macronization unavailable")
+                    term = lines[i].split("[")[0]
                 return definition, term
         
             
