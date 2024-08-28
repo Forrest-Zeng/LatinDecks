@@ -3,6 +3,7 @@ import time
 import random
 from unidecode import unidecode
 session = requests.session()
+import urllib.request
 
 class Translator():
     def __init__(self):
@@ -19,6 +20,7 @@ class Translator():
 "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
 "Mozilla/5.0 (X11; Linux i686; rv:124.0) Gecko/20100101 Firefox/124.0"
         ]
+
 
     def __main__(self):
         ...
@@ -47,26 +49,37 @@ class Translator():
 
         # print(word)
 
+        
+        
+
         demacronized_word = unidecode(word.rstrip())            
 
         time.sleep(delay)
 
         headers = {'User-Agent':random.choice(self.header_choices),
-                   'authority':'www.google.com',
+                # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                # 'Accept-Language': 'en-US,en;q=0.5'
+                #    'authority':'www.google.com',
                    'accept':'*/*',
                    'Connection': 'keep-alive',
                    }
 
-        print(headers)
+        # print(headers)
 
         try:
-            req = session.get(self.endpoint,params={"query":demacronized_word})
-        except req.json()["status"] != "ok":
+            # req = self.session.urlopen((self.endpoint,params={"query":demacronized_word})
+            r = urllib.request.Request(url=f'{self.endpoint}?query={demacronized_word}',headers=headers)
+            
+            req = eval(urllib.request.urlopen(r).read().decode('utf-8'))
+            print(type(req))
+            print(req)
+                                       
+        except req["status"] != "ok" or req["status"] != "200":
             print("req didn't return ok status")
-            print(req.json()["status"])
+            print(req["status"])
             raise UserWarning
     
-        lines = req.json()["message"].replace('.','').split("\n")
+        lines = req["message"].replace('.','').split("\n")
         for i in range(len(lines)):
             # print(i)
             # print(lines[i].split(' '))
@@ -74,6 +87,7 @@ class Translator():
                 definition = lines[i+1].rstrip()
                 term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
                 print(term_request.status_code)
+                print(term_request)
                 term = term_request.json()["macronized_text"].replace(',','')
                 return definition, term
             
