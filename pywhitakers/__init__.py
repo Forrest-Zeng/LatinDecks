@@ -4,6 +4,7 @@ import random
 from unidecode import unidecode
 session = requests.session()
 import urllib.request
+import urllib.parse
 
 class Translator():
     def __init__(self):
@@ -67,10 +68,7 @@ class Translator():
         # print(headers)
 
         try:
-            # req = self.session.urlopen((self.endpoint,params={"query":demacronized_word})
-            r = urllib.request.Request(url=f'{self.endpoint}?query={demacronized_word}',headers=headers)
-            
-            req = eval(urllib.request.urlopen(r).read().decode('utf-8'))
+            req = session.get(self.endpoint,headers=headers).json()
             print(type(req))
             print(req)
                                        
@@ -86,8 +84,11 @@ class Translator():
             if self.latin_comparison(demacronized_word, lines[i].replace(',','').split(' ')[0]) and not self.latin_comparison(demacronized_word, lines[i+1].replace(',','').split(' ')[0]) and "[" in lines[i]:
                 definition = lines[i+1].rstrip()
                 try:
-                    term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
-                    term = term_request.json()["macronized_text"].replace(',','')
+                    data = urllib.parse.urlencode({"vanilla_text":lines[i].split("[")[0]}).encode()
+                    t_request = urllib.request.Request(url="https://www.latin-is-simple.com/api/vocabulary/macronize/",headers=headers,data=data)
+                    term_request = eval(urllib.request.urlopen(t_request).read().decode('utf-8'))
+                    # term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
+                    term = term_request["macronized_text"].replace(',','')
                 except:
                     print("Macronization unavailable")
                     term = lines[i].split("[")[0]
@@ -100,8 +101,11 @@ class Translator():
             if "[" in lines[i]:
                 definition = lines[i+1].rstrip()
                 try:
-                    term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
-                    term = term_request.json()["macronized_text"].replace(',','')
+                    data = urllib.parse.urlencode({"vanilla_text":lines[i].split("[")[0]}).encode()
+                    t_request = urllib.request.Request(url="https://www.latin-is-simple.com/api/vocabulary/macronize/",headers=headers,data=data)
+                    term_request = eval(urllib.request.urlopen(t_request).read().decode('utf-8'))
+                    # term_request = session.post("https://www.latin-is-simple.com/api/vocabulary/macronize/",data={"vanilla_text":lines[i].split("[")[0]},headers=headers)
+                    term = term_request["macronized_text"].replace(',','')
                 except:
                     print("Macronization unavailable")
                     term = lines[i].split("[")[0]
