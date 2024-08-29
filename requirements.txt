@@ -1,0 +1,3 @@
+Flask==3.0.3
+pywhitakers==0.0.2
+Unidecode==1.3.6
