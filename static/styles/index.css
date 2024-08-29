@@ -1,11 +1,8 @@
-#deck_section {
-    position:fixed;
-    left:10;
-    /* float:left; */
-    
+#deck_section{
+    float:left
 }
 #instruction_section {
-float:right
+    float:right
 }   
 #credit_section {
     position:fixed;
