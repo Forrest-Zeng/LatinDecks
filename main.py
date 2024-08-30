@@ -2,10 +2,6 @@ from flask import Flask, request, render_template, send_file
 
 app = Flask(__name__)
 
-import sys
-
-sys.path.append('.')
-
 from LatinDeckCreator import DeckCreator
 
 DeckClient = DeckCreator("outputs")
