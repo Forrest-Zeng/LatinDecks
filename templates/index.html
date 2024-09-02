@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
   <title>LatinDecks: Latin Flashcard Deck Creator</title>
@@ -15,7 +16,12 @@
 
 <p><textarea cols="40" rows="20" id="term_form_value"></textarea></p>
 
-<p id="term_count">Number of terms:</p>         
+<p id="term_count">Number of terms:</p>        
+<select name="flashcardsoftware" id="software">
+  <option name="quizlet">Quizlet</option>
+  <option name="anki">Anki</option>
+
+</select> 
 
 <p><input type = "submit" value = "submit" id="term_form_submit"/></p>
 
@@ -26,13 +32,14 @@
       <script>
          $("#term_form_submit").click(function(){
              var text = $("#term_form_value").val();
+             var flashcard_software = $("#software").val();
          
              document.getElementById("place_for_file").innerHTML = ""
 
              $.ajax({
                url: "/create_deck",
                type: "post",
-               data: {terms: text},
+               data: {terms: text,software: flashcard_software},
                success: function(response) {
                  $("#place_for_file").html(response);
                },

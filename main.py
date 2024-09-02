@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, send_file
+import sys
 
+sys.path.append('.')
 app = Flask(__name__)
 
 from LatinDeckCreator import DeckCreator
@@ -25,20 +27,26 @@ def create_deck():
         oldest_file = min(full_path, key=os.path.getctime)
         os.remove(oldest_file)
 
-    ID = random.randint(1, 100000)
     lines = request.form['terms'].split('\n')
+    software = request.form['software']
+    print(software)
 
     internal_deck = DeckClient.create_deck_internal(lines)
-    DeckClient.FileHandlerObject.write_text_lines(internal_deck[0],
-                                                  output=f'{ID}.txt')
+    if software == "Quizlet":
+        return render_template("copy.html", deck=internal_deck[0].replace('\n','<br/>'), failed=internal_deck[1],duplicates=[item for item, count in collections.Counter(lines).items() if count > 1])
+    else:
+        ID = random.randint(1, 100000)
+        DeckClient.FileHandlerObject.write_text_lines(internal_deck[0],
+                                                  output=f'{ID}.{"pptx" if software=="Quizlet" else "txt"}')
 
-    return render_template("download.html", ID=ID, failed=internal_deck[1], duplicates=[item for item, count in collections.Counter(lines).items() if count > 1])
+        return render_template("download.html", ID=ID, failed=internal_deck[1], duplicates=[item for item, count in collections.Counter(lines).items() if count > 1])
 
 
 @app.route('/download', methods=['GET'])
 def download_file():
     ID = request.args['id']
-    return send_file(f"outputs/{ID}.txt", as_attachment=True)
+    software = request.args['software']
+    return send_file(f'outputs/{ID}.{"txt"}', as_attachment=True)
 
 
 if __name__ == '__main__':
