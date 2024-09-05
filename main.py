@@ -37,7 +37,7 @@ def create_deck():
     else:
         ID = random.randint(1, 100000)
         DeckClient.FileHandlerObject.write_text_lines(internal_deck[0],
-                                                  output=f'{ID}.{"pptx" if software=="Quizlet" else "txt"}')
+                                                  output=f'{ID}.txt')
 
         return render_template("download.html", ID=ID, failed=internal_deck[1], duplicates=[item for item, count in collections.Counter(lines).items() if count > 1])
 
@@ -46,7 +46,7 @@ def create_deck():
 def download_file():
     ID = request.args['id']
     software = request.args['software']
-    return send_file(f'outputs/{ID}.{"txt"}', as_attachment=True)
+    return send_file(f'outputs/{ID}.txt', as_attachment=True)
 
 
 if __name__ == '__main__':
