@@ -24,35 +24,7 @@
 </select> 
 
 <p><input type = "submit" value = "submit" id="term_form_submit"/></p>
-
-
       File Download (May take more than 5 minutes): <div id="place_for_file" ></div>
-
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script>
-         $("#term_form_submit").click(function(){
-             var text = $("#term_form_value").val();
-             var flashcard_software = $("#software").val();
-         
-             document.getElementById("place_for_file").innerHTML = ""
-
-             $.ajax({
-               url: "/create_deck",
-               type: "post",
-               data: {terms: text,software: flashcard_software},
-               success: function(response) {
-                 $("#place_for_file").html(response);
-               },
-               error: function(xhr) {
-                 //Do Something to handle error
-               }
-             });
-         });
-        $("#term_form_value").keyup(function(){
-          var rowCount = $("#term_form_value").val().split(/\r|\r\n|\n/).length;
-          document.getElementById("term_count").textContent = "Number of terms: ".concat(rowCount);
-        });
-      </script>
 </div>
 <div id="instruction_section">
 <h1>Instructions</h1>
@@ -80,14 +52,60 @@ Enter terms like this:<br>
   This may take a few seconds to a few minutes, depending on the number of words. <br>
 </p>
 <h2>Deck Import Instructions</h2>
-<p>The download will return a .txt file that you can import into your flashcard software.<br>
-  Depending on your flashcard software, change the separator to ":"<br>
-  Each term and definition is separated by a line.
+<button onclick="quizletReveal()"><h3>Quizlet</h3></button>
+<p id="quizletInstructions" class="quizlet-instructions">Create an empty quizlet deck, or open an existing one (do not select "Import from Document")<br>
+Click "Import" on the left side above the card list.<br>
+Change the <b>"between term and definition"</b> to custom ":"<br>
+<b>"Between lines"</b> should be "New line."<br>
+Paste the deck into the window.<br>
+</p>
+<button onclick="ankiReveal()"><h3>Anki</h3></button>
+<p id="ankiInstructions" class="anki-instructions">
+  Select a deck. <br>
+  Click "Import File" at the bottom of the home screen.<br>
+  Navigate to the downloaded file and select it.<br>
+  Set the <b>"Field Separator"</b> to colon, ":"<br>
+  Double-check which deck to import to.<br>
+  Click "Import"<br>
+</p>
 </p>
 </div>
 <div id="credit_section">
   <p>dictionary: <a href="https://latin-words.com">Whitakers Words</a>
   created by Forrest Zeng</p> 
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+   $("#term_form_submit").click(function(){
+       var text = $("#term_form_value").val();
+       var flashcard_software = $("#software").val();
+   
+       document.getElementById("place_for_file").innerHTML = ""
+
+       $.ajax({
+         url: "/create_deck",
+         type: "post",
+         data: {terms: text,software: flashcard_software},
+         success: function(response) {
+           $("#place_for_file").html(response);
+         },
+         error: function(xhr) {
+           //Do Something to handle error
+         }
+       });
+   });
+  $("#term_form_value").keyup(function(){
+    var rowCount = $("#term_form_value").val().split(/\r|\r\n|\n/).length;
+    document.getElementById("term_count").textContent = "Number of terms: ".concat(rowCount);
+  });
+  function quizletReveal(){
+    document.getElementById("quizletInstructions").classList.toggle("show");
+  }
+  function ankiReveal(){
+    document.getElementById("ankiInstructions").classList.toggle("show");
+  }
+</script>
+
    </body>
 </html>

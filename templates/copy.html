@@ -1,13 +1,11 @@
-<button onclick="copyFunction()">Copy Deck!</button>
-{% autoescape false %}
-<div id="deck"
-style="width:300px;height:200px;overflow:scroll;padding:5px">{{deck}}</div>
-{% endautoescape %}
+<button onclick="copyFunction()">Copy Deck!</button> <br>
+<textarea id="deck" style="width:300px;height:200px;overflow:scroll;white-space:pre-wrap;">{{deck}}</textarea>
 <p>The following terms failed the translate: {{failed}}</p>
 <p>The following terms are duplicates: {{duplicates}}</p>
 
 <script>
     function copyFunction(){
-        navigator.clipboard.writeText("{{deck}}")
+        var deck = document.getElementById('deck').value;
+        navigator.clipboard.writeText(deck);
     }
 </script>
