@@ -4,6 +4,9 @@
   <title>LatinDecks: Latin Flashcard Deck Creator</title>
   <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/favicon.ico')}}">
   <meta name="google-site-verification" content="5hWRXVRPLdYYLXZWCCXo7_Dg51fijckHFt2NPQqhiMQ" />
+  <meta name="description" content="Automatically create Quizlets for studying Latin and save hours of looking up obscure words. LatinDecks accelerates learning, memorizing, and vocabulary retention."> 
+  <meta name="og:title" property="og:title" content="LatinDecks: Latin Flashcard Deck Creator">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
    <body>      
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}" type="text/css" media="screen" />
@@ -18,8 +21,9 @@
 
 <p id="term_count">Number of terms:</p>        
 <select name="flashcardsoftware" id="software">
-  <option name="quizlet">Quizlet</option>
   <option name="anki">Anki</option>
+  <option name="quizlet">Quizlet</option>
+  
 
 </select> 
 
